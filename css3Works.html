@@ -1,0 +1,312 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>css3作品</title>
+<link rel="stylesheet" href="css/common.css">
+<style>
+html,body{ height:100%;}
+body{ padding:0 150px; background:#FFC; overflow:hidden;} 
+#header{ background:#fff; margin-bottom:-1px; height:100px; border:1px solid #ccc;}
+#header h3{ height:50px; font:bold 36px/50px "方正兰亭超细黑简体","微软雅黑";}
+#header h3 span{ color:#993; font:36px/50px Verdana, Geneva, sans-serif;}
+#header h3 p{  font:bold 36px/50px "方正兰亭超细黑简体","微软雅黑"; transform:scale(1,-1); -webkit-mask:-webkit-linear-gradient(rgba(0,0,0,0) 30%,rgba(0,0,0,0.6) 60%,rgba(0,0,0,1) 100%);}
+#main { height:100%; background:#fff; padding-top:50px; border:1px solid #ccc;}
+#main ul#content{ width:850px; height:500px; overflow:hidden; position:relative; margin:0 auto;}
+#main ul#content>li{ position:absolute; height:500px; width:800px;}
+#main ul#content>li:nth-child(2){ left:25px;}
+#main ul#content>li:nth-child(3){ left:50px;}
+#main ul#content>li:nth-child(4){ left:75px;}
+#main ul#content>li span.title{ float:left; background:#F93; color:#fff; border:1px solid #CCC; box-sizing:border-box; width:25px; height:100%; font:20px '微软雅黑'; text-align:center; cursor:pointer;}
+#main ul#content>li div.work{ float:left; width:750px; height:100%; border:1px solid #ccc; box-sizing:border-box; overflow:hidden;}
+li#works1 div.work{ background:#000; }
+li#works1  ul{ position:relative; width:150px; height:250px; margin:100px auto; transform-style:preserve-3d; transform:perspective(800px) rotateX(0deg) rotateY(0deg);}
+li#works1  ul li{ position:absolute; width:150px; height:250px; border-radius:10px; box-shadow:0 0 20px #fff; overflow:hidden;}
+li#works1  ul li img{ width:100%; height:100%;}
+li#works2 div.work{ background:#fff;}
+li#works2 div.work div.wrap{ width:600px; height:350px; background:#fff; margin:50px auto; background:url(img/change2.jpg); background-size:100% 100%; position:relative;}
+li#works2 div.work div.wrap span{ float:left; background:url(img/change1.jpg); background-size:600px 350px;}
+li#works2 div.work div.nextBtn{ position:absolute; bottom:20px; width:120px; left:50%; margin-left:-60px; height:50px; text-align:center; font:30px/50px '微软雅黑'; background:#09F; color:#fff; cursor:pointer;}
+li#works3 div.work{ background:#fff;}
+div#clock{ width:400px; height:400px; margin:50px auto; background:#fff; border:5px solid #000; border-radius:50%; position:relative;}
+div#hrs{ position:absolute; width:14px; height:90px; background:#000; left:50%; margin-left:-7px; top:110px; transform-origin:center bottom;}
+div#mins{ position:absolute; width:10px; height:130px; background:#000; left:50%; margin-left:-5px; top:70px; transform-origin:center bottom; transform:rotate(90deg)}
+div#secs{ position:absolute; width:6px; height:160px; background:#F03; left:50%; margin-left:-3px; top:40px; transform:rotate(180deg); transform-origin:center bottom;}
+div#point{ position:absolute; width:30px; height:30px; border-radius:50%; background:radial-gradient(#CCC,#333); left:50%; top:50%; margin-left:-15px; margin-top:-15px;}
+div#clock span{ transform-origin:center 200px; position:absolute; top:0; left:50%; margin-left:-2px; background:#000;}
+div#clock span i{ position:absolute; top:20px; left:-5px; width:20px; height:20px; text-align:center; font:14px/20px '微软雅黑';}
+li#work4 div.work{ background:#fff;}
+ul#box{ width:300px; height:300px; position:relative; margin:100px auto; transform-style:preserve-3d; transform:perspective(800px) rotateX(0deg) rotateY(0deg);transition:0.4s all linear;}
+ul#box li{ position:absolute; width:100%; height:100%; text-align:center; font:40px/300px Verdana, Geneva, sans-serif;}
+ul#box li:nth-child(1){ background:#C30; transform:translateZ(150px);}
+ul#box li:nth-child(2){ background:#6FF; transform:translate(-150px,0) rotateY(-90deg);}
+ul#box li:nth-child(3){ background:#09F; transform:translateZ(-150px) scale(-1,1);}
+ul#box li:nth-child(4){ background:#FC3; transform:translate(150px,0) rotateY(90deg);}
+ul#box li:nth-child(5){ background:#999; transform:translate(0,-150px) rotateX(90deg);}
+ul#box li:nth-child(6){ background:#0C6; transform:translate(0,150px) rotateX(-90deg);}
+</style>
+<script src="js/move.js"></script>
+<script src="js/common.js"></script>
+<script>
+window.onload=function(){
+	var aHead=document.querySelectorAll('.title');
+	var aContent=document.querySelectorAll('.work');
+	var oUl=document.getElementById('content');
+	
+	var aLi=oUl.children;
+	var len=aHead.length;
+	var w1=aHead[0].offsetWidth;
+	var w2=aContent[0].offsetWidth;
+	//手风琴目录
+	for(var i=0;i<len;i++){
+		(function(index){
+			aHead[index].onclick=function(){
+				for(var i=0;i<len;i++){
+					if(i<=index){
+						move(aLi[i],{left:i*w1});
+					}else{
+						move(aLi[i],{left:i*w1+w2});
+					}
+				}		
+			}	
+		})(i);	
+	}
+	//图片环
+	var oWork1=document.getElementById('works1');
+	var oRing=oWork1.querySelector('ul');
+	var aRing=oRing.children;
+	for(var i=0;i<aRing.length;i++){
+		aRing[i].style.transform="  rotateY("+i*360/8+"deg) translateZ(300px)";
+	}
+	var rX=0;
+	var rY=0;
+	oRing.onmousedown=function(e){
+		clearInterval(oRing.timer);
+		var disX=e.clientX-rY;
+		var disY=e.clientY-rX;
+		var speedX=speedY=0;
+		var lastX=lastY=0;
+		document.onmousemove=function(e){
+			rX=e.clientY-disY;
+			rY=e.clientX-disX;
+			oRing.style.transform="perspective(800px) rotateX("+-rX/5+"deg) rotateY("+rY/5+"deg)";	
+			speedX=e.clientY-lastY;
+			speedY=e.clientX-lastX;
+			lastX=e.clientX;
+			lastY=e.clientY;
+		}	
+		document.onmouseup=function(){
+			document.onmousemove=document.onmouseup=null;	
+			ringMove(oRing,speedX,speedY);
+		}
+		return false;
+	}
+	function ringMove(obj,speedX,speedY){
+		obj.timer=setInterval(function(){
+			rX=rX+speedX;
+			rY=rY+speedY;
+			oRing.style.transform="perspective(800px) rotateX("+-rX/5+"deg) rotateY("+rY/5+"deg)";
+			speedX*=0.9;
+			speedY*=0.9;
+			if(Math.abs(speedX)<1)speedX=0;
+			if(Math.abs(speedY)<1)speedY=0;
+			if(speedX==0&&speedY==0){
+				clearInterval(obj.timer);	
+			}
+		},30);
+	}
+	//图片切换效果
+	var oWrap=document.getElementById('works2').getElementsByClassName('wrap')[0];
+	var prevBtn=document.getElementById('works2').getElementsByClassName('prevBtn')[0];
+	var nextBtn=document.getElementById('works2').getElementsByClassName('nextBtn')[0];
+	var row=5;
+	var col=8;
+	for(var i=0;i<row;i++){
+		for(var j=0;j<col;j++){
+			var oS=document.createElement('span');
+			oS.style.width=oWrap.offsetWidth/col+'px';
+			oS.style.height=oWrap.offsetHeight/row+'px';
+			oWrap.appendChild(oS);
+			oS.style.backgroundPosition=-oS.offsetLeft+'px -'+oS.offsetTop+'px';;
+		}	
+	}
+	var aS=oWrap.children;
+	var imgNow=0;
+	var beOK=false;
+	nextBtn.onclick=function(){
+		if(beOK)return;
+		beOK=true;
+		imgNow++;
+		for(var i=0;i<aS.length;i++){
+			aS[i].style.transition="0.4s";
+			var disX=aS[i].offsetLeft+aS[i].offsetWidth/2-oWrap.offsetWidth/2;
+			var disY=aS[i].offsetTop+aS[i].offsetHeight/2-oWrap.offsetHeight/2;
+			aS[i].style.transform="translate("+disX/3+"px,"+disY/3+"px) rotateX("+rnd(-180,180)+"deg) rotateY("+rnd(-180,180)+"deg) ";	
+			aS[i].style.opacity=0;
+		}	
+		aS[0].addEventListener('transitionend',fnEnd,false);
+		function fnEnd(){
+			for(var i=0;i<aS.length;i++){
+				aS[i].style.transition="none";
+				aS[i].style.opacity=1;
+				aS[i].style.transform="translate(0px,0px) rotateX(0deg) rotateY(0deg)";	
+				aS[i].style.backgroundImage="url(img/change"+(imgNow%3+1)+".jpg)";
+			}	
+			oWrap.style.backgroundImage="url(img/change"+((imgNow+1)%3+1)+".jpg)";
+			beOK=false;
+		}
+	}
+	//css3小时钟
+	var oClock=document.querySelector('#clock');
+	var hrs=document.querySelector('#hrs');
+	var mins=document.querySelector('#mins');
+	var secs=document.querySelector('#secs');
+	for(var i=0;i<60;i++){
+		var oS=document.createElement('span');
+		oS.style.width="4px";
+		oS.style.height="8px";
+		if(i%5==0){
+			oS.style.width="6px";
+			oS.style.height="14px";	
+			oS.style.marginLeft="-3px";	
+			var oI=document.createElement('i');
+			if(i==0){
+				oI.innerHTML=12;	
+			}else{
+				oI.innerHTML=i/5;	
+			}
+			oI.style.transform="rotate("+-i*6+"deg)";
+			oS.appendChild(oI);
+		}
+		oClock.appendChild(oS);	
+		oS.style.transform="rotate("+i*6+"deg)";
+	}
+	clock();
+	setInterval(clock,1000);
+	function clock(){
+		var d=new Date();
+		var hours=d.getHours();
+		var minutes=d.getMinutes();
+		var seconds=d.getSeconds();
+		hrs.style.transform="rotate("+(hours+minutes/60)*30+"deg)";
+		mins.style.transform="rotate("+(mins+secs/60)*6+"deg)";
+		secs.style.transform="rotate("+seconds*6+"deg)";	
+	}
+	//3D盒子
+	var oUl=document.getElementById('box');
+	var boxTimer=null;
+	var boxTimer2=null;
+	var rx=ry=0;
+
+	boxTimer=setInterval(function(){
+		ry+=1;
+		oUl.style.transform="perspective(800px) rotateX("+rx+"deg) rotateY("+ry+"deg)";	
+	},30);
+	oUl.onmousedown=function(e){
+		clearInterval(boxTimer);
+		clearTimeout(boxTimer2);
+		oUl.style.transition="none";
+		var lastX=e.clientX;
+		var lastY=e.clientY;
+		var lastrx=rx;
+		var lastry=ry;
+		document.onmousemove=function(e){
+			rx=lastrx+(lastY-e.clientY)/3;
+			ry=lastry+(e.clientX-lastX)/3;
+			oUl.style.transform="perspective(800px) rotateX("+rx+"deg) rotateY("+ry+"deg)";	
+		}	
+		document.onmouseup=function(){
+			document.onmousemove=document.onmouseup=null;	
+			boxTimer2=setTimeout(function(){
+				oUl.style.transition="0.4s all linear";
+				boxTimer=setInterval(function(){
+					ry+=1;
+					oUl.style.transform="perspective(800px) rotateX("+rx+"deg) rotateY("+ry+"deg)";	
+				},30);		
+			},1000);	
+		}
+		return false;
+	}
+}
+</script>
+</head>
+
+<body>
+<div id="header">
+	<h3>CSS<span>3</span> 作品
+    	<p>CSS<span>3</span> 作品</p>
+    </h3>
+</div>
+<div id="main">
+	<ul id="content">
+    	<!-- 图片环 -->
+    	<li id="works1">
+        	<span class="title">3 D图片环</span>
+            <div class="work">
+            	<ul>
+                	<li>
+                    	<img src="img/ring1.jpeg">
+                    </li>
+                	<li>
+                    	<img src="img/ring2.jpg">
+                    </li>
+                	<li>
+                    	<img src="img/ring3.jpg">
+                    </li>
+                	<li>
+                    	<img src="img/ring4.jpg">
+                    </li>
+                	<li>
+                    	<img src="img/ring5.jpg">
+                    </li>
+                	<li>
+                    	<img src="img/ring6.jpg">
+                    </li>
+                	<li>
+                    	<img src="img/ring7.jpg">
+                    </li>
+                	<li>
+                    	<img src="img/ring8.jpg">
+                    </li>
+                </ul>	
+            </div>
+        </li>
+        <!-- 图片翻页 -->
+    	<li id="works2">
+        	<span class="title">图片切换效果</span>
+            <div class="work">
+            	<div class="wrap">
+                	
+                </div>
+                <div class="nextBtn">下一页</div>
+            </div>
+        </li>
+        <!-- css3小时钟 -->
+    	<li id="works3">
+        	<span class="title">小时钟</span>
+            <div class="work">
+            	<div id="clock">
+                	<div id="hrs"></div>
+                    <div id="mins"></div>
+                    <div id="secs"></div>
+                    <div id="point"></div>
+                </div>
+            </div>
+        </li>
+        <li id="work4">
+        	<span class="title">3 D盒子</span>
+            <div class="work">
+            	<ul id="box">
+                	<li>HTML5</li>
+                	<li>javascript</li>
+                	<li>CSS3</li>
+                	<li>Ajax</li>
+                	<li>JQuery</li>
+                	<li>jsonp</li>
+                </ul>
+            </div>
+       	</li>
+    </li>
+</div>
+</body>
+</html>

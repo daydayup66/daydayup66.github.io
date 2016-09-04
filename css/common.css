@@ -1,0 +1,6 @@
+@charset "utf-8";
+*{ margin:0; padding:0; font:16px '微软雅黑'; color:#000;}
+li{ list-style:none;}
+a{ text-decoration:none;}
+.clearfix:after{ content:""; display:block; clear:both;}
+.clearfix{ zoom:1;}

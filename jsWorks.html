@@ -1,0 +1,344 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>原生JS作品</title>
+<link rel="stylesheet" href="css/common.css">
+<style>
+body{ background:#09F; padding:0 150px;}
+#wrap{ }
+#wrap h2{ padding-top:20px; height:60px; text-indent:2em; font:bold 40px/60px "方正兰亭超细黑简体","微软雅黑"; background:url(img/js.jpg) no-repeat 300px 0 #fff; background-size:contain; }
+#wrap ol#worksList{ background:#fff; padding:50px 0;}
+#wrap ol#worksList>li{ margin-bottom:50px;}
+#banner{}
+h3.title{ text-indent:2em; font:24px/30px '微软雅黑';}
+p.des{ text-indent:6em; font:16px/24px '微软雅黑'; margin:10px 0;}
+#banner #bannerBox{ width:800px; height:350px; overflow:hidden; margin:0 auto; position:relative;}
+#banner #bannerBox ul{ position:absolute; left:-800px; width:9999px;}
+#banner #bannerBox ul li{ float:left; width:800px; height:350px; }
+#banner #bannerBox ul li img{ width:100%; height:100%;}
+#banner #bannerBox span{ position:absolute; width:80px; height:140px; background:#ccc; opacity:0.3; text-align:center; font:60px/140px "Courier New", Courier, monospace;   top:50%; margin-top:-70px;  z-index:2; cursor:pointer;}
+#banner #bannerBox span:hover{ opacity:0.8;}
+#banner #bannerBox span#nextBtn{ right:0;}
+#banner #bannerBox ol { position:absolute; bottom:10px; left:50%; margin-left:-50px; z-index:2;}
+#banner #bannerBox ol li{ float:left; margin-right:14px; width:12px; height:12px; border-radius:50%; background:#fff; border:4px solid rgba(255,255,255,0); cursor:pointer;}
+#banner #bannerBox ol li.active{ border-color:rgba(0,0,255,1);}
+#drag{}
+#drag #dragBox{ width:800px; height:500px; overflow:hidden; position:relative; margin:0 auto; background:#0CF;}
+#drag #dragBox ul{ width:9999px; position:absolute; left:250px; top:150px;}
+#drag #dragBox ul li{ float:left; width:300px; height:250px;}
+#drag #dragBox ul li img{ width:100%; height:100%;}
+#collBox{  position:relative; width:800px; height:500px; background:#0FF; margin:0 auto;}
+#collBox div{ position:absolute; left:0; top:0; width:50px; height:50px; border-radius:50%;}
+#collBtn{ float:left; margin-left:20px;  width:80px; height:30px; text-align:center; font:20px/30px '微软雅黑'; background:#06F; cursor:pointer; color:#fff;}
+#blockAnimation div{ width:800px; height:500px; margin:0 auto; background:url(img/block1.jpg) no-repeat; background-size:100%; position:relative;}
+#blockAnimation span{float:left; background:url(img/block0.jpg); background-size:800px 500px;}
+</style>
+<script src="js/move.js"></script>
+<script src="js/common.js"></script>
+<script>
+window.onload=function(){
+	var oBanner=document.getElementById('bannerBox');
+	var oUl=oBanner.getElementsByTagName('ul')[0];
+	var aLi=oBanner.getElementsByTagName('ol')[0].children;
+	var prevBtn=document.getElementById('prevBtn');
+	var nextBtn=document.getElementById('nextBtn');	
+	var len=oUl.children.length;
+	var iNow=1;
+	var bOK=false;
+	var timer=null;
+	prevBtn.onclick=function(){
+		if(bOK)return;
+		bOK=true;
+		iNow--;
+		tab();
+	}
+	nextBtn.onclick=function(){
+		if(bOK)return;
+		bOK=true;	
+		iNow++;
+		tab();
+	}
+	for(var i=0;i<aLi.length;i++){
+		(function(index){
+			aLi[index].onmouseover=function(){
+				iNow=index+1;
+				tab();
+			}		
+		})(i);
+	}
+	timer=setInterval(function(){
+		iNow++;
+		tab();	
+	},2000);
+	oBanner.onmouseover=function(){
+		clearInterval(timer);	
+	}
+	oBanner.onmouseout=function(){
+		timer=setInterval(function(){
+			iNow++;
+			tab();	
+		},2000);	
+	}
+	function tab(){
+		for(var i=0;i<aLi.length;i++){
+			aLi[i].className="";	
+		}		
+		if(iNow==0){
+			aLi[3].className="active";
+		}else if(iNow==len-1){
+			aLi[0].className="active";
+		}else{
+			aLi[iNow-1].className="active";
+		}
+		
+		move(oUl,{left:-iNow*800},{complete:function(){
+			if(iNow<=0){
+				oUl.style.left=-(len-2)*800+'px';	
+				iNow=len-2;
+			}else if(iNow>=len-1){
+				oUl.style.left="-800px";
+				iNow=1;	
+			}
+			bOK=false;
+		}});
+		
+	}		//无缝滚动
+	var oDrag=document.getElementById('dragBox');
+	var dragUl=oDrag.children[0];
+	var dragBox=dragUl.children;
+	var aPos=[];
+	for(var i=0;i<dragBox.length;i++){
+		dragBox[i].style.left=dragBox[i].offsetLeft+'px';
+		dragBox[i].style.top=dragBox[i].offsetTop+'px';
+		aPos.push(dragBox[i].offsetLeft);
+	}
+	for(var i=0;i<dragBox.length;i++){
+		
+		dragBox[i].style.position="absolute";	
+	}
+	setSize();
+	dragUl.onmousedown=function(e){
+		var dis=e.clientX-dragUl.offsetLeft;
+		document.onmousemove=function(e){
+			var l=e.clientX-dis;
+			if(l>250)l=250;
+			if(l<oDrag.offsetWidth/2-(dragBox.length-0.5)*300)l=oDrag.offsetWidth/2-(dragBox.length-0.5)*300;
+			/*if(l>0)l=0;
+			if(l<oDrag.offsetWidth-dragBox.length*dragBox[0].offsetWidth)l=oDrag.offsetWidth-dragBox.length*dragBox[0].offsetWidth;*/
+			dragUl.style.left=l+'px';
+			setSize();
+		}	
+		document.onmouseup=function(){
+			document.onmousemove=document.onmouseup=null;	
+		}
+		return false;
+	}
+	function setSize(){
+		for(var i=0;i<dragBox.length;i++){
+			var dis=(aPos[i]+300/2+dragUl.offsetLeft)-oDrag.offsetWidth/2;
+			dis=Math.abs(dis);
+			var scale=1-dis/700;
+			if(scale<0.5)scale=0.5;
+			dragBox[i].style.width=scale*500+'px';
+			dragBox[i].style.height=scale*400+'px';
+			dragBox[i].style.marginLeft=-(dragBox[i].offsetWidth-250)/2+'px';
+			dragBox[i].style.marginTop=-(dragBox[i].offsetHeight-200)/2+'px';
+			dragBox[i].style.zIndex=Math.round(scale*10);
+		}
+	}		 		//拖拽切换
+	var collBox=document.getElementById('collBox');
+	var collBtn=document.querySelector('#collBtn');
+	var count=10;
+	collBtn.onclick=function(){
+		for(var i=0;i<count;i++){
+			setTimeout(createBall,Math.random()*1500);
+		}
+	}
+	function createBall(){
+		var oBall=document.createElement('div');
+		var r=rnd(0,255);
+		var g=rnd(0,255);
+		var b=rnd(0,255);
+		oBall.style.background="rgb("+r+","+g+","+b+")";
+		collBox.appendChild(oBall);
+		var speedX=rnd(0,25);
+		var speedY=rnd(0,25);
+		coll(oBall,speedX,speedY);	
+	}
+	function coll(obj,speedX,speedY){
+		obj.timer=setInterval(function(){
+			speedY+=4;
+			var x=obj.offsetLeft+speedX;
+			var y=obj.offsetTop+speedY;
+			if(x<0){
+				x=0;
+				speedX*=-0.9;
+				speedY*=0.9
+			}else if(x>collBox.offsetWidth-obj.offsetWidth){
+				x=collBox.offsetWidth-obj.offsetWidth;
+				speedX*=-0.9;
+				speedY*=0.9;	
+			}
+			if(y<0){
+				y=0;
+				speedY*=-0.9;
+				speedX*=0.9;
+			}else if(y>collBox.offsetHeight-obj.offsetHeight){
+				y=collBox.offsetHeight-obj.offsetHeight;
+				speedY*=-0.9;
+				speedX*=0.9;	
+			}
+			obj.style.left=x+'px';
+			obj.style.top=y+'px';
+			//console.log(speedX,speedY);
+			if(Math.abs(speedX)<1)speedX=0;
+			if(Math.abs(speedY)<1)speedY=0;
+			if(speedX==0&&speedY==0&&Math.round(obj.offsetTop)==collBox.offsetHeight-obj.offsetHeight){
+				clearInterval(obj.timer);	
+				collBox.removeChild(obj);
+				//alert('done');
+			}
+		},30);	
+	}		//碰撞
+	var oBlock=document.getElementById('blockAnimation').querySelector('div');
+	var row=5;
+	var col=8;
+	var imgNow=0;
+	for(var i=0;i<row;i++){
+		for(j=0;j<col;j++){
+			var oS=document.createElement('span');
+			oS.style.width=	oBlock.offsetWidth/col+'px';
+			oS.style.height=oBlock.offsetHeight/row+'px';
+			oBlock.appendChild(oS);
+			oS.style.backgroundPosition=-oS.offsetLeft+"px "+-oS.offsetTop+"px";
+		}	
+	}
+	var aS=oBlock.children;
+	document.addEventListener('scroll',block,false);
+	function block(){
+		var scrollTop=document.documentElement.scrollTop||document.body.scrollTop;
+		var height=document.documentElement.clientHeight;
+		if(scrollTop+height>oBlock.offsetTop){
+			document.removeEventListener('scroll',block,false);
+			setInterval(function(){
+				imgNow++;
+				console.log(1);
+				for(var i=0;i<aS.length;i++){
+					(function(index){
+						setTimeout(function(){
+							move(aS[index],{opacity:0},{complete:function(){
+									
+							}});	
+						},Math.random()*500);	
+					})(i);	
+				}	
+				setTimeout(function(){
+					for(var i=0;i<aS.length;i++){
+						aS[i].style.opacity=1;
+						aS[i].style.backgroundImage="url(img/block"+(imgNow%4)+".jpg)";	
+						oBlock.style.backgroundImage="url(img/block"+((imgNow+1)%4)+".jpg)";
+					}	
+				},1000);
+			},2000);	
+		}	
+	}		//分块运动 
+}
+</script>
+</head>
+
+<body>
+<div id="wrap">
+	<h2>原生JS作品</h2>
+	<ol id="worksList">
+    	<!-- 无缝滚动 -->
+    	<li id="banner">
+        	<h3 class="title">无缝滚动</h3>
+            <p class="des">作品介绍：</p>
+            <div id="bannerBox">
+            	<span id="prevBtn"><</span>
+            	<span id="nextBtn">></span>
+                <ol>
+                	<li class="active"></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ol>
+            	<ul class="clearfix">
+                	<li>
+                    	<img src="img/scroll4.jpg"/>
+                    </li>
+                	<li>
+                    	<img src="img/scroll1.jpg"/>
+                    </li>
+                	<li>
+                    	<img src="img/scroll2.jpg"/>
+                    </li>
+                	<li>
+                    	<img src="img/scroll3.jpg"/>
+                    </li>
+                	<li>
+                    	<img src="img/scroll4.jpg"/>
+                    </li>
+                    <li>
+                    	<img src="img/scroll1.jpg"/>
+                    </li>
+                </ul>
+            </div>
+        </li>	
+        <!-- 无缝滚动结束 -->
+        
+        <!-- 拖拽切换 -->
+    	<li id="drag">
+        	<h3 class="title">拖拽切换</h3>
+            <p class="des">作品介绍：</p>
+        	<div id="dragBox">
+            	<ul >
+                	<li>
+                    	<img src="img/scroll4.jpg"/>
+                    </li>
+                	<li>
+                    	<img src="img/scroll1.jpg"/>
+                    </li>
+                	<li>
+                    	<img src="img/scroll2.jpg"/>
+                    </li>
+                	<li>
+                    	<img src="img/scroll3.jpg"/>
+                    </li>
+                	<li>
+                    	<img src="img/scroll4.jpg"/>
+                    </li>
+                    <li>
+                    	<img src="img/scroll1.jpg"/>
+                    </li>
+                </ul>
+            </div>	
+        </li>
+        <!-- 拖拽切换结束 -->
+        
+        <!-- 碰撞（高级运动） -->
+    	<li>
+        	<h3 class="title">碰撞（高级运动）</h3>
+            <p class="des">作品介绍：</p>
+           	<div id="collBtn">点击</div>
+            <div id="collBox">
+            	
+            </div>
+        </li>
+        <!-- 碰撞结束 -->
+        
+        <!-- 分块运动 -->
+    	<li id="blockAnimation">
+        	<h3 class="title">分块运动</h3>
+            <p class="des">作品介绍：</p>
+        	<div>
+            	 	
+            </div>
+        </li>
+        <!-- 分块运动结束 -->
+    	<li></li>
+    </ol>
+</div>
+</body>
+</html>
