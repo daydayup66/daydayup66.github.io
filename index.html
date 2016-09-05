@@ -2,26 +2,29 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>无标题文档</title>
+<title>崔乾坤的个站</title>
 <script src="js/move.js"></script>
 <script src="js/setScroll.js"></script>
+<link rel="stylesheet" href="css/common.css">
 <style>
 *{ margin:0; padding:0; list-style:none; font-style:normal; font-weight:500;}
 a{ text-decoration:none;}
 html,body{ height:100%;}
-body{  position:relative;}
-#welcome{ height:100%; overflow:hidden; transition:0.4s all ease-out;}
-#welcome p{ position:absolute; width:400px; height:80px; left:50%; top:40%; font:80px/80px '微软雅黑'; color:#090;}
-#welcome #wel_bg{ width:100%; height:100%; position:absolute;}
-#main{ width:100%; height:2000px;; position:relative; left:0; top:100%; transition:0.4s all ease-out; display:none; }
-#bg{ position:fixed; width:100%; height:100%; z-index:-1; opacity:0.5}
-#header{ height:60px; width:100%; background:rgba(0,0,0,1); position:fixed; z-index:2;}
+body{  position:relative; overflow:hidden;}
+#main{ width:100%; height:2000px; height:100%; position:absolute; left:0; top:0; transition:0.4s all ease;  }
+#main .area{ height:100%;}
+#main .bg{background:url(img/3.jpg) no-repeat; background-size:100% 100%;}
+/*#bg{ position:fixed; width:100%;  z-index:-1; opacity:0.5}*/
+#bg{ position:fixed; width:100%; height:100%;  transition:0.3s;}
+#header{ height:60px; width:100%; background:#000; position:fixed; z-index:5;}
+header{ background:rgba(255,255,255,0.7);}
 #clock{ padding-top:10px;  float:left;  margin-left:20px;}
-#clock_main{ color:#fff;}
+/*#clock_main{ color:#fff;}
+*/
 #clock_main span{ float:left; width:26px; height:44px; border-radius:7px; background:url(img/clock.png) no-repeat; transition:0.4s all ease;}
-#clock_main em{ float:left; width:20px; height:44px;}
-#nav{ float:right; width:400px; margin-top:10px; }
-#nav ul{}
+#clock_main em{ float:left; width:20px; height:44px; color:#fff; font:20px/44px "微软雅黑"; text-align:center; }
+#nav{ float:right; width:450px; margin-top:10px; }
+#nav ul{overflow:hidden;}
 #nav ul li{ float:left; width:100px; height:40px; margin-left:10px; position:relative; transform-style:preserve-3d; transform:perspective(800px) rotateX(0deg); transition:0.3s;}
 #nav ul li:hover{ transform:perspective(800px) rotateX(90deg);}
 #nav ul li div{  width:100%; height:100%; position:absolute; left:0; top:0;}
@@ -29,43 +32,132 @@ body{  position:relative;}
 #nav ul li div.front{  transform:translateZ(20px);}
 #nav ul li div.back{  transform:translateY(20px) rotateX(-90deg) ;}
 #nav ul li div.back a{ background:#fff; color:#000;} 
-#title{ height:710px; text-align:center; font:60px/710px '微软雅黑'; position:relative;}
-#title span{ position:absolute; width:200px; height:60px; top:55%; left:55%; font:30px/60px '微软雅黑';}
-#info { height:710px; }
-#info ol{ float:left; width:120px; height:400px; margin-left:300px;}
-#info ol li{ width:120px; height:60px; border-radius:10px; background:#066; color:#fff; margin-bottom:30px; cursor:pointer; text-align:center; font:26px/60px '楷体'; box-shadow:0 5px 10px #000,inset 0 0 10px #fff; transition:0.2s;}
-#info ol li:hover{ box-shadow:0 5px 10px #000,inset 0 0 20px #fff; }
-#info ol li:active{ box-shadow:0 2px 5px #000,inset 0 0 10px #fff; transform:translate(0,5px);}
-#info #content{ float:left; position:relative; overflow:hidden; width:700px; height:400px; border-radius:30px; margin-left:30px; background:rgba(255,255,255,0.5);}
-#info #content ul{ height:100%; width:9999px; position:absolute; left:0; top:0; transition:0.3s all ease;}
-#info #content ul li{ float:left; width:700px; height:100%; }
+#title{ position:relative;  background:url(img/wel_bg.jpg) no-repeat; background-size:100% 100%;}
+#title h3{  width:100%; text-align:center; font:60px "Courier New", Courier, monospace; position:absolute; top:40%; margin-top:-30px; color:#0F0;}
+#title span{ position:absolute; width:300px; height:60px; top:50%; left:67%; font:bold 30px/60px "方正兰亭超细黑简体"; color:#0F0;}
+#info { background:linear-gradient(#0F9,#9F6); }
+#info ol{ margin-top:150px; float:left; width:120px; height:400px; margin-left:200px;}
+#info ol li{ width:120px; height:60px; border-radius:10px; background:linear-gradient(#CCC,#fff);color:#333; margin-bottom:30px; cursor:pointer; text-align:center; font:bold 22px/60px "方正兰亭超细黑简体","微软雅黑"; box-shadow:0 5px 10px #000,inset 0 0 4px #fff; transition:0.2s;}
+#info ol li:hover{ box-shadow:0 5px 10px #000,inset 0 0 10px #fff; }
+#info ol li:active{ box-shadow:0 2px 5px #000,inset 0 0 4px #fff; transform:translate(0,5px);}
+#info #content{margin-top:150px; float:left; position:relative;  width:700px; height:400px;   margin-left:30px; }
+#info #content ul{ height:100%; width:100%; position:relative; box-shadow:5px 10px 10px #000; border-radius:0 0 30px 30px;}
+#info #content ul li{ position:absolute; width:700px; height:100%; left:0; top:0; transform-origin:top; border-radius:0 0 30px 30px; border-top:5px dashed #000; background:rgba(255,255,255,1); z-index:1; transform:perspective(1000px) rotateX(0deg);}
+#info #content ul li p{ font:20px/30px '微软雅黑'; margin:20px;}
+#info #content ul li:first-child{ z-index:3; background:#0cc}
+#info #content ul li:nth-child(2){ background:#FF9;}
+#info #content ul li:nth-child(3){ background:#FC3;}
+#works h3.main_title{ padding-top:100px; font:40px Tahoma, Geneva, sans-serif, cursive; text-indent:4em;}
+#works .content{}
+#works .content ul{width:700px; margin:20px auto; overflow:hidden;}
+#works .content ul li{ float:left; position:relative; width:300px; height:200px; margin:0 50px 50px 0;}
+#works .content ul li a{ position:absolute; left:0; top:0; width:100%; height:100%;}
+#works .content ul li a h3.title{ position:absolute; height:50px; top:50px; left:0; width:100%; text-indent:1em; font:44px/50px "Lucida Sans Unicode", "Lucida Grande", sans-serif; color:#fff;  z-index:3;transition:0.3s;}
+#works .content ul li a div.mask{ width:100%; height:100%; position:absolute; background:rgba(54,185,180,0.6); z-index:2;transition:0.3s;}
+#works .content ul li a div.bg{ width:100%; height:100%; position:absolute; background:#fff; z-index:1;}
+#works .content ul li a:hover h3.title{ top:0; opacity:0; font-size:20px;}
+#works .content ul li a:hover div.mask{ background:rgba(0,144,255,0.2); }
+#works .content ul li:first-child div.bg{ background:url(img/jsbg.png) no-repeat; background-size:100% 100%;}
+#works .content ul li:nth-child(2) div.bg{ background:url(img/css3bg.jpg) no-repeat; background-size:100% 100%;}
+#works .content ul li:nth-child(3) div.bg{ background:url(img/h5bg.jpg) no-repeat; background-size:100% 100%;}
+#works .content ul li:nth-child(4) div.bg{ background:url(img/jqbg.jpg) no-repeat; background-size:100% 100%;}
+#contact{width:100%; height:100%; position:relative;}
+#contact .box{width:600px; position:absolute; top:26%; left:50%; margin-left:-300px; text-align:center;}
+#contact .box h3{font:24px/40px "微软雅黑"; color:#30F; letter-spacing:8px;}
+#contact .box p{font:20px/50px "微软雅黑";}
+#contact .box strong{font:24px/50px "宋体"; color:#60F;}
 </style>
 <script>
 window.onload=function(){
+	var oBg=document.getElementById('bg');
 	var oMain=document.getElementById('main');
-	var oWel=document.getElementById('welcome');
 	var aClock=document.getElementById('clock_main').querySelectorAll('span');
 	var oInfo=document.getElementById('info');
 	var aHead=oInfo.children[0].children;
 	var oContent=oInfo.children[1].children[0];
+	var aContent=oContent.children;
 	var aNav=document.getElementById('nav').children[0].children;
 	var oWorks=document.getElementById('works');
-	aNav[0].onclick=function(){
-		setScroll(oInfo.offsetTop-100);		
-	}
-	aNav[1].onclick=function(){
-		setScroll(oWorks.offsetTop-100);	
-	}			
-	
+	var height=document.documentElement.clientHeight;
+	var iNow=0;
+	var beOK=false;
+	for(var i=0; i < aNav.length; i++){
+		(function(index){
+			aNav[index].onclick=function(){
+				oMain.style.top = "-" + index * height + "px";
+			}
+		})(i);
+	};
 	for(var i=0;i<aHead.length;i++){
 		(function(index){
 			aHead[i].onclick=function(){
-				oContent.style.left=-index*700+'px';
+				if(index==iNow){return}
+				if(beOK)return;
+				beOK=true;
+				aContent[iNow].style.transition="1s all ease";
+				aContent[iNow].style.transform="perspective(1000px) rotateX(160deg)";
+				//aContent[iNow].style.opacity=1;
+				aContent[iNow].addEventListener('transitionend',fnEnd,false);
+				function fnEnd(){
+					aContent[iNow].removeEventListener('transitionend',fnEnd,false);
+					aContent[iNow].style.transition="none";
+					aContent[iNow].style.transform="rotateX(0deg)";
+					aContent[iNow].style.zIndex="1";
+					//aContent[iNow].style.opacity=1;
+					aContent[index].style.zIndex="3";
+					iNow=index;
+					beOK=false;
+				}
 			}	
 		})(i);	
 	}
 	clock();
 	setInterval(clock,1000);
+	wheelEvt();
+	var wheelOK=false;
+	function wheelEvt(){
+		var ff=window.navigator.userAgent.toLowerCase().indexOf('firefox');
+		if(ff!=-1){
+			document.addEventListener('DOMMouseScroll',fnWheel,false);	
+		}else{
+			document.onmousewheel=fnWheel;
+		}	
+		function fnWheel(e){
+			if(wheelOK)return;
+			wheelOK=true;
+			var down=false;
+			if(e.wheelDelta){   //非ff
+				down=e.wheelDelta<0?true:false;	
+			}else if(e.detail){  //for ff
+				down=e.detail>0?true:false;
+			}
+			(function(down){
+				if(down){
+/*					if(oMain.offsetTop<-99999){			//待完善;
+						wheelOK=false;
+						return;	
+					}
+*/					if(oMain.offsetTop <= -3*height){
+						fnEnd();
+						return;
+					}
+
+					oMain.style.top=oMain.offsetTop-height+'px';
+				}else{
+					if(oMain.offsetTop>=0){
+						wheelOK=false;
+						return;	
+					}
+					oMain.style.top=oMain.offsetTop+height+'px';
+				}
+				oMain.addEventListener('transitionend',fnEnd,false);
+				function fnEnd(){
+					oMain.removeEventListener('transitionend',fnEnd,false);
+					wheelOK=false;	
+				}
+			})(down);
+		}	
+	}
 	function clock(){		//头部时钟函数
 		var d=new Date();
 		var hrs=d.getHours();
@@ -77,18 +169,6 @@ window.onload=function(){
 			aClock[i].style.backgroundPosition="0 -"+arr[i]*44+"px";	
 		}	
 	}
-	document.addEventListener('mousewheel',fnWheel,false);
-	function fnWheel(){		//欢迎页滚轮事件
-		document.removeEventListener('mousewheel',fnWheel,false);
-		oWel.style.height="0px";
-		oWel.style.opacity=0;
-		oMain.style.display="block";
-		oWel.addEventListener('transitionend',function(){
-			this.style.display="none";	
-			
-		},false);
-		oMain.style.top="0px";
-	}	
 	function addZero(num){	//补零函数
 		return num<10?'0'+num:''+num;	
 	}
@@ -98,90 +178,125 @@ window.onload=function(){
 
 <body>
 <!-- 欢迎页 -->
-<div id="welcome">
-	
-	<img id="wel_bg" src="img/wel_bg.jpg">
-    <p>welcome...</p>
-</div>
+
 <!-- 欢迎页结束 -->
+<div id="header">
+    <div id="clock">
+        <div id="clock_main">
+            <span id="hr1"></span>
+            <span id="hr2"></span>
+            <em>:</em>
+            <span id="ms1"></span>
+            <span id="ms2"></span>
+            <em>:</em>
+            <span id="sec1"></span>
+            <span id="sec2"></span>
+        </div>
+    </div>
+    <div id="nav">
+        <ul>
+        	<li>
+                <div class="front"><a href="javascript:;">首页</a></div>
+                <div class="back"><a href="javascript:;">首页</a></div>
+            </li>
+
+            <li>
+                <div class="front"><a href="javascript:;">简历</a></div>
+                <div class="back"><a href="javascript:;">简历</a></div>
+            </li>
+            <li>
+                <div class="front"><a href="javascript:;">作品</a></div>
+                <div class="back"><a href="javascript:;">作品</a></div>
+            </li>
+            <li>
+                <div class="front"><a href="javascript:;">联系</a></div>
+                <div class="back"><a href="javascript:;">联系</a></div>
+            </li>
+        </ul>
+    </div>
+</div>
 
 <!-- 主体 -->
 <div id="main">
 <!-- 头部 -->
-	<img id="bg" src="img/3.jpg">
-	<div id="header">
-    	<div id="clock">
-            <div id="clock_main">
-            	<span id="hr1"></span>
-                <span id="hr2"></span>
-                <em></em>
-                <span id="ms1"></span>
-                <span id="ms2"></span>
-                <em></em>
-                <span id="sec1"></span>
-                <span id="sec2"></span>
-            </div>
-        </div>
-        <div id="nav">
-        	<ul>
-            	<li>
-                	<div class="front"><a href="javascript:;">简历</a></div>
-                	<div class="back"><a href="javascript:;">简历</a></div>
-                </li>
-                <li>
-                	<div class="front"><a href="javascript:;">作品</a></div>
-                	<div class="back"><a href="javascript:;">作品</a></div>
-                </li>
-                <li>
-                	<div class="front"><a href="javascript:;">联系</a></div>
-                	<div class="back"><a href="javascript:;">联系</a></div>
-                </li>
-            </ul>
-        </div>
-    </div>
+	<!--<img id="bg" src="img/3.jpg">-->
+    
+	
     
 <!-- 头部结束 -->
-	<p id="title">
-    	Welcome To My Website
-		<span>By 崔乾坤</span>    
-    </p>
-    <div id="info">
+	<div class="area" id="title">
+    	<h3>Welcome To My Website</h3>
+        <span>By Cui Qian Kun</span>
+    </div>
+    <div class="area bg" id="info">
     	<ol>
         	<li>个人信息</li>
             <li>技能掌握</li>
-            <li>其他</li>
         </ol>
         <div id="content">
         	<ul>
                 <li>
-                	<p>AAA</p>
-                	<p>学习方向：原生JS、jQuery、H5+CSS3</p>
-                	<p></p>
-                	<p></p>
-                	<p></p>
+                	<p>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：崔乾坤</p>
+                    <p>学&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;历：本科</p>
+                    <p>工作经验：1年多前端开发</p>
+                    <p>应聘职位：前端开发工程师</p>
                 </li>
                 <li>
-                	<p>bbbb</p>
-                	<p>学习方向：原生JS、jQuery、H5+CSS3</p>
-                	<p></p>
-                	<p></p>
-                	<p></p>
+                	<p>熟练使用原生JavaScript，掌握JQuery、Zepto库，熟悉JavaScript面向对象、作用域、闭包，熟练掌握 BOM、DOM 操作</p>
+                	<p>熟练使用HTML/CS,熟练使用HTML5和CSS3,了解canvas绘图</p>
+                	<p>熟悉Ajax交互、JSONP跨域开发等技术。</p>
+                	<p>了解SeaJs、AngularJS等框架 。</p>
+                	<p>了解Grunt、Gulp工具。</p>
                 </li>
-                <li>
-                	<p>ccc信</p>
-                	<p>学习方向：原生JS、jQuery、H5+CSS3</p>
-                	<p></p>
-                	<p></p>
-                	<p></p>
+                
+            </ul>
+        </div>
+    </div>
+    <div class="area bg" id="works">
+    	<h3 class="main_title">My Works</h3>
+        <div class="content">
+        	<ul>
+            	<li>
+                	<a target="_blank" href="jsWorks.html">
+                    	<h3 class="title">Javascript</h3>
+                        <div class="mask"></div>
+                        <div class="bg"></div>
+                    </a>
+                </li>
+            	<li>
+                	<a target="_blank" href="css3Works.html">
+                    	<h3 class="title">CSS3</h3>
+                        <div class="mask"></div>
+                        <div class="bg"></div>
+                    </a>
+                </li>
+            	<li>
+                	<a target="_blank" href="h5Works.html">
+                    	<h3 class="title">HTML5</h3>
+                        <div class="mask"></div>
+                        <div class="bg"></div>
+                    </a>
+                </li>
+            	<li>
+                	<a target="_blank" href="jqWorks.html">
+                    	<h3 class="title">jQuery</h3>
+                        <div class="mask"></div>
+                        <div class="bg"></div>
+                    </a>
                 </li>
             </ul>
         </div>
     </div>
-    <div id="works">
-    	<h3>My Works</h3>
-        <div>
-        	
-        </div>
+    <div class="area bg" id="contact">
+    	<div class="box">
+            <h3>联系我</h3>
+            <p>学习是一个充实愉悦的过程</p>
+            <p>每个完美页面的展现都令我兴奋不已</p>
+            <p>愿走进良师益友的团队</p>
+            <p>一起探索世界的美好</p>
+            <strong>Tel:170-5102-2056</strong><br/>
+            <strong>Email:cuiqk2014@163.com</strong>
+    	</div>
     </div>
 </div>
 </body>
