@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>无标题文档</title>
+<script src="js/jquery-1.7.2.js"></script>
+<link rel="stylesheet" href="css/common.css"/>
+<style>
+h3{font:bold 30px/50px "微软雅黑"; margin:20px 0 10px 10%;}
+#box{width:800px; height:500px; position:relative; margin:20px auto; overflow:hidden;}
+#box ul{width:9999px; position:absolute; left:0; top:0; }
+#box ul li{float:left; width:100%; height:500px; display:none; transition:0.5s all linear;}
+#box ul li.cur{display:block;}
+#box ul li img{width:800px; height:500px;}
+#box span{width:60px; height:60px; text-align:center; font:60px/60px "宋体"; position:absolute; z-index:2;  top:50%; margin-top:-30px; cursor:pointer; background:#ccc; opacity:0.5;}
+#box span.pre{left:0;}
+#box span.next{right:0;}
+#box ol{position:absolute; bottom:30px; right:100px;}
+#box ol li{width:16px; height:16px; float:left; margin-left:20px; background:#ccc; border-radius:50%; z-index:1; border:6px solid #ccc; cursor:pointer;}
+#box ol li.active{border:6px solid #00F;}
+</style>
+<script>
+$(function(){
+	var oBox= $('#box');
+	var aIconLi= $('#box ol li');
+	var aLi= $('#box ul li');
+	var oPre=$('#box .pre');
+	var oNext = $('#box .next');
+	var iNow=0;
+	aIconLi.click(function(){
+		iNow=$(this).index();
+		tab();
+	});
+	
+	function tab(){
+		aIconLi.removeClass('active');
+		aLi.removeClass('cur');
+		aIconLi.eq(iNow).addClass('active');
+		aLi.eq(iNow).addClass('cur');
+	};
+	var timer=setInterval(function(){
+		iNow++;
+		iNow=iNow%=aLi.length;
+		tab();
+	},1500);
+	oBox.hover(function(){
+		clearInterval(timer);
+	},function(){
+		timer=setInterval(function(){
+			iNow++;
+			iNow=iNow%=aLi.length;
+			tab();	
+		},1500);
+	});
+	oPre.click(function(){
+		if(iNow==0) iNow=4;
+		iNow--;
+		tab();
+	});
+	oNext.click(function(){
+		iNow++;
+		if(iNow==4) iNow=0;
+		tab();
+	});
+});
+
+
+
+</script>
+</head>
+
+<body>
+<h3>jquery作品</h3>
+<div id="box">
+	<ul class="clearfix">
+    	<li class="cur">
+        	<img src="img/scroll1.jpg"/>
+        </li>
+    	<li>
+        	<img src="img/scroll2.jpg"/>
+        </li>
+    	<li>
+        	<img src="img/scroll3.jpg"/>
+        </li>
+    	<li>
+        	<img src="img/scroll4.jpg"/>
+        </li>
+    </ul>
+    <ol class="clearfix">
+    	<li class="active"></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ol>
+    <span class="pre"><</span>
+    <span class="next">></span>
+</div>
+</body>
+</html>
